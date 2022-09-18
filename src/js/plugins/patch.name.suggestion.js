@@ -16,6 +16,10 @@ Drupal.behaviors.dreditorPatchNameSuggestion = {
       $link.click(function() {
         var patchName = '';
 
+        var projName = Drupal.dreditor.issue.getProjectShortName();
+
+        patchName += (projName ? projName + '-' : '');
+
         function truncateString (str, n,useWordBoundary){
           var toLong = str.length>n,
           s_ = toLong ? str.substr(0,n-1) : str;
@@ -32,6 +36,7 @@ Drupal.behaviors.dreditorPatchNameSuggestion = {
           patchName += (patchName.length ? '-' : '') + nid;
         }
         patchName += '-' + Drupal.dreditor.issue.getNewCommentNumber();
+        patchName += '-D' + Drupal.dreditor.issue.getSelectedVersionCore().replace(/\.x/, '');
         patchName += '.patch';
 
         window.prompt("Please use this value", patchName);
