@@ -11,6 +11,8 @@ Drupal.behaviors.dreditorPatchReview = {
     var $elements = $context.find('.file').once('dreditor-patchreview').find('> a');
     $elements.each(function () {
       if (this.href.match(/\.(patch|diff|txt)$/)) {
+        $(this).addClass('dreditor-patchlink');
+
         // Generate review link.
         var $file = $(this).closest('tr').find('.file');
         var $link = $('<a class="dreditor-button dreditor-patchreview" href="' + this.href + '">Review</a>').click(function (e) {
