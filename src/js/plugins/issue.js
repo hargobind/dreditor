@@ -5,7 +5,7 @@ Drupal.dreditor.issue = {};
 Drupal.dreditor.issue.getNid = function() {
   var href = $('#tabs a:first').attr('href');
   if (href.length) {
-    return href.match(/(?:node|comment\/reply)\/(\d+)/)[1];
+    return href.match(/(?:node|comment\/reply|issues)\/(\d+)/)[1];
   }
   return false;
 };
