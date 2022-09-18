@@ -207,26 +207,21 @@ Drupal.dreditor.syntaxAutocomplete.prototype.suggestions.user = function (needle
   if (matches = needle.match('^@([a-zA-Z0-9]+)$')) {
     // Performance: Upon first match, setup a username list once.
     if (typeof self.suggestionUserList === 'undefined') {
-      self.suggestionUserList = {};
+      self.suggestionUserList = [];
       var seen = {};
       // Add issue author to comment authors and build the suggestion list.
       $('.comment a.username').add('.node .submitted a.username').each(function () {
         if (!seen[this.text]) {
           seen[this.text] = 1;
-          // Use the shortest possible needle.
-          var i, n, name = this.text.toLowerCase();
-          for (i = 1; i < name.length; i++) {
-            n = name.substring(0, i);
-            if (!self.suggestionUserList[n]) {
-              self.suggestionUserList[n] = '@' + this.text + '^';
-              break;
-            }
-          }
+          self.suggestionUserList.push({search: this.text.toLowerCase(), name: '@' + this.text});
         }
       });
     }
-    if (self.suggestionUserList[matches[1]]) {
-      return self.suggestionUserList[matches[1]];
+    // Return the first match.
+    for (var i = 0; i < self.suggestionUserList.length; i++) {
+      if (self.suggestionUserList[i].search.indexOf(matches[1]) === 0) {
+        return self.suggestionUserList[i].name;
+      }
     }
   }
   return false;
